@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Dan&#39;s Blog</title>
+    <link>/es/post/</link>
+    <description>Recent content in Posts on Dan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 13 Jul 2019 13:14:54 +0000</lastBuildDate>
+    
+	<atom:link href="/es/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Arquitectura de Spark</title>
+      <link>/es/post/arquitecturaspark/</link>
+      <pubDate>Sat, 13 Jul 2019 13:14:54 +0000</pubDate>
+      
+      <guid>/es/post/arquitecturaspark/</guid>
+      <description>Arquitectura de Spark La clave del asombroso performance de Spark es el paralelismo:
+  El escalado vertical -&amp;gt; está limitado por una cantidad finita de RAM, los Threads disponibles en una máquina o la velocidad del CPU.
+  El escalado horizontal -&amp;gt; se pueden anadir nuevos nodos al cluster de forma casi indefinida, aumentando el rendimiento de las aplicaciones.
+  Spark paraleliza a dos niveles:
+  El primer nivel de paralelización es el ejecutor, una JVM que corre un nodo.</description>
+    </item>
+    
+    <item>
+      <title>Estudiando para la certificación de DataBricks - Spark 2.4.x</title>
+      <link>/es/post/certificacionspark/</link>
+      <pubDate>Fri, 12 Jul 2019 12:14:54 +0000</pubDate>
+      
+      <guid>/es/post/certificacionspark/</guid>
+      <description>Contenido: Arquitectura de Spark  Driver Executor Core/Slots Stages Tasks Partitions Shuffling Transformaciones Wide vs Narrow  Code APIs  SparkSession DataFrameReader/DataFrameWriter DataFrame/Dataset UDFs Row/Column Spark SQL  Tipo de Examen:  10% Preguntas multirespuesta (20 preguntas) 90% Coding Challenges (20 - 25 que se resuelven en unos 5 minutos cada una)  Opciones de Examen:  Es posible elegir entre utilizar Scala o Python.  Otros:   Es posible acceder a la documentación oficial de Spark y de Databricks durante el examen:</description>
+    </item>
+    
+  </channel>
+</rss>

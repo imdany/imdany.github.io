@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.69.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Dan" />
+  <meta property="og:url" content="/post/sparkcertification/" />
+  <link rel="canonical" href="/post/sparkcertification/" /><link rel="alternate" type="application/atom+xml" href="/index.xml" title="Dan&#39;s Blog">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "\/"
+      },
+      "articleSection" : "post",
+      "name" : "Studying for the Databricks\x27 certification - Spark 2.4.x",
+      "headline" : "Studying for the Databricks\x27 certification - Spark 2.4.x",
+      "description" : "Content: Spark\x26rsquo;s Architecture  Driver Executor Core\/Slots Stages Tasks Partitions Shuffling Wide vs Narrow Transformations  Code APIs  SparkSession DataFrameReader\/DataFrameWriter DataFrame\/Dataset UDFs Row\/Column Spark SQL  Exam::  10% Multiresponse Questions (20 Questions) 90% Coding Challenges (20 - 25 that can be resolved in 5 min each)  Programming language:  It\x26rsquo;s possible to do the exam in either Scala or Python.  Others:   It\x26rsquo;s allowed to access the offitial Spark and Databricks documentetion during the exam:",
+      "inLanguage" : "en-US",
+      "author" : "Dan",
+      "creator" : "Dan",
+      "publisher": "Dan",
+      "accountablePerson" : "Dan",
+      "copyrightHolder" : "Dan",
+      "copyrightYear" : "2019",
+      "datePublished": "2019-07-12 12:14:54 \x2b0000 UTC",
+      "dateModified" : "2019-07-12 12:14:54 \x2b0000 UTC",
+      "url" : "\/post\/sparkcertification\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Studying for the Databricks&#39; certification - Spark 2.4.x - Dan&#39;s Blog</title>
+  <meta property="og:title" content="Studying for the Databricks&#39; certification - Spark 2.4.x - Dan&#39;s Blog" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Content: Spark&rsquo;s Architecture  Driver Executor Core/Slots Stages Tasks Partitions Shuffling Wide vs Narrow Transformations  Code APIs  SparkSession DataFrameReader/DataFrameWriter DataFrame/Dataset UDFs Row/Column Spark SQL  Exam::  10% Multiresponse Questions (20 Questions) 90% Coding Challenges (20 - 25 that can be resolved in 5 min each)  Programming language:  It&rsquo;s possible to do the exam in either Scala or Python.  Others:   It&rsquo;s allowed to access the offitial Spark and Databricks documentetion during the exam:" />
+  <meta name="description" content="Content: Spark&rsquo;s Architecture  Driver Executor Core/Slots Stages Tasks Partitions Shuffling Wide vs Narrow Transformations  Code APIs  SparkSession DataFrameReader/DataFrameWriter DataFrame/Dataset UDFs Row/Column Spark SQL  Exam::  10% Multiresponse Questions (20 Questions) 90% Coding Challenges (20 - 25 that can be resolved in 5 min each)  Programming language:  It&rsquo;s possible to do the exam in either Scala or Python.  Others:   It&rsquo;s allowed to access the offitial Spark and Databricks documentetion during the exam:" />
+  <meta property="og:locale" content="en-us" />
+
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="Dan&#39;s Blog">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
+</head>
+
+<body>
+  <article class="post English" id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="signatures site-title">
+    <a href="/">Dan&#39;s blog</a>
+  </div>
+</header>
+<div class="row end-xs">
+  
+  
+  <div class="lang-switch col-xs-3 col-xs-offset-9">
+    <a href="/es/">Español</a>
+  </div>
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Studying for the Databricks&#39; certification - Spark 2.4.x</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2019-07-12 12:14:54 UTC">
+                12 Jul 2019
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+              <div class="post-author">
+                <a target="_blank" href="http://www.imdany.com/">@Dan</a>
+              </div>
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h2 id="content"><strong>Content</strong>:</h2>
+<h3 id="sparks-architecture"><strong>Spark&rsquo;s Architecture</strong></h3>
+<ul>
+<li>Driver</li>
+<li>Executor</li>
+<li>Core/Slots</li>
+<li>Stages</li>
+<li>Tasks</li>
+<li>Partitions</li>
+<li>Shuffling</li>
+<li>Wide vs Narrow Transformations</li>
+</ul>
+<h3 id="code-apis"><strong>Code APIs</strong></h3>
+<ul>
+<li>SparkSession</li>
+<li>DataFrameReader/DataFrameWriter</li>
+<li>DataFrame/Dataset</li>
+<li>UDFs</li>
+<li>Row/Column</li>
+<li>Spark SQL</li>
+</ul>
+<h3 id="exam"><strong>Exam:</strong>:</h3>
+<ul>
+<li>10% Multiresponse Questions (20 Questions)</li>
+<li>90% Coding Challenges (20 - 25 that can be resolved in 5 min each)</li>
+</ul>
+<h3 id="programming-language"><strong>Programming language</strong>:</h3>
+<ul>
+<li>It&rsquo;s possible to do the exam in either Scala or Python.</li>
+</ul>
+<h3 id="others"><strong>Others:</strong></h3>
+<ul>
+<li>
+<p>It&rsquo;s allowed to access the offitial Spark and Databricks documentetion during the exam:</p>
+<ul>
+<li><a href="https://spark.apache.org/docs/latest/api.html">https://spark.apache.org/docs/latest/api.html</a></li>
+<li><a href="https://docs.databricks.com/">https://docs.databricks.com/</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="duration"><strong>Duration:</strong></h3>
+<ul>
+<li>4 Hours. According to some comments in the forum: &ldquo;You have enoght time&hellip; they want to measure the knowledge and not the velocity&rdquo;</li>
+</ul>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        <div class="post-comments">
+          <div id="disqus_thread"></div>
+<script>
+  window.addEventListener("load", () => {
+    (function() {
+      
+      var d = document,
+        s = d.createElement("script");
+      s.src = "https://danbl.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  });
+</script>
+<noscript
+  >Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript"
+    >comments powered by Disqus.</a
+  ></noscript
+>
+
+        </div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/imdany/" target="_blank">Github</a>
+  </div>
+  
+  <div class="site-footer-item">
+    <a href="http://www.imdany.com/" target="_blank">About</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
+
+
+<script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-85705506-4', 'auto');
+  ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</body>
+
+</html>

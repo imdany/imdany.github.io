@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.69.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Dan" />
+  <meta property="og:url" content="/es/post/arquitecturaspark/" />
+  <link rel="canonical" href="/es/post/arquitecturaspark/" /><link rel="alternate" type="application/atom+xml" href="/index.xml" title="Dan&#39;s Blog">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "\/"
+      },
+      "articleSection" : "post",
+      "name" : "Arquitectura de Spark",
+      "headline" : "Arquitectura de Spark",
+      "description" : "Arquitectura de Spark La clave del asombroso performance de Spark es el paralelismo:\n  El escalado vertical -\x26gt; está limitado por una cantidad finita de RAM, los Threads disponibles en una máquina o la velocidad del CPU.\n  El escalado horizontal -\x26gt; se pueden anadir nuevos nodos al cluster de forma casi indefinida, aumentando el rendimiento de las aplicaciones.\n  Spark paraleliza a dos niveles:\n  El primer nivel de paralelización es el ejecutor, una JVM que corre un nodo.",
+      "inLanguage" : "en-US",
+      "author" : "Dan",
+      "creator" : "Dan",
+      "publisher": "Dan",
+      "accountablePerson" : "Dan",
+      "copyrightHolder" : "Dan",
+      "copyrightYear" : "2019",
+      "datePublished": "2019-07-13 13:14:54 \x2b0000 UTC",
+      "dateModified" : "2019-07-13 13:14:54 \x2b0000 UTC",
+      "url" : "\/es\/post\/arquitecturaspark\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Arquitectura de Spark - Dan&#39;s Blog</title>
+  <meta property="og:title" content="Arquitectura de Spark - Dan&#39;s Blog" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="Arquitectura de Spark La clave del asombroso performance de Spark es el paralelismo:
+  El escalado vertical -&gt; está limitado por una cantidad finita de RAM, los Threads disponibles en una máquina o la velocidad del CPU.
+  El escalado horizontal -&gt; se pueden anadir nuevos nodos al cluster de forma casi indefinida, aumentando el rendimiento de las aplicaciones.
+  Spark paraleliza a dos niveles:
+  El primer nivel de paralelización es el ejecutor, una JVM que corre un nodo." />
+  <meta name="description" content="Arquitectura de Spark La clave del asombroso performance de Spark es el paralelismo:
+  El escalado vertical -&gt; está limitado por una cantidad finita de RAM, los Threads disponibles en una máquina o la velocidad del CPU.
+  El escalado horizontal -&gt; se pueden anadir nuevos nodos al cluster de forma casi indefinida, aumentando el rendimiento de las aplicaciones.
+  Spark paraleliza a dos niveles:
+  El primer nivel de paralelización es el ejecutor, una JVM que corre un nodo." />
+  <meta property="og:locale" content="en-us" />
+
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="Dan&#39;s Blog">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
+</head>
+
+<body>
+  <article class="post Español" id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="signatures site-title">
+    <a href="/es/">Dan&#39;s blog</a>
+  </div>
+</header>
+<div class="row end-xs">
+  
+  <div class="lang-switch col-xs-3 col-xs-offset-9">
+    <a href="/en/">English</a>
+  </div>
+  
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Arquitectura de Spark</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2019-07-13 13:14:54 UTC">
+                13 Jul 2019
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+              <div class="post-author">
+                <a target="_blank" href="http://www.imdany.com/">@Dan</a>
+              </div>
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <h2 id="arquitectura-de-spark"><strong>Arquitectura de Spark</strong></h2>
+<p>La clave del asombroso performance de Spark es el paralelismo:</p>
+<ul>
+<li>
+<p>El escalado vertical -&gt; está limitado por una cantidad finita de RAM, los Threads disponibles en una máquina o la velocidad del CPU.</p>
+</li>
+<li>
+<p>El escalado horizontal -&gt; se pueden anadir nuevos nodos al cluster de forma casi indefinida, aumentando el rendimiento de las aplicaciones.</p>
+</li>
+</ul>
+<p>Spark paraleliza a dos niveles:</p>
+<ul>
+<li>
+<p>El primer nivel de paralelización es el ejecutor, una JVM que corre un nodo. Típicamente una instancia por nodo.</p>
+</li>
+<li>
+<p>El segundo nivel es el &ldquo;Slot&rdquo; - Un número que viene determinado por el número de cores y CPU&rsquo;s de cada nodo.</p>
+</li>
+</ul>
+<h3 id="driver"><strong>Driver</strong></h3>
+<p>Es el controlador de la ejecución de una Aplicación de Spark y mantiene el estado del cluster. Interactua con el Gestor del Clúster de cara a obtener recursos físicos y lanzar los Ejecutores.</p>
+<p>No es más que un proceso Java (SparkContext) que corre en una máquina física que es responsable de mantener el estado de la aplicación.</p>
+<h3 id="executor"><strong>Executor</strong></h3>
+<p>Los ejecutores de Spark son los procesos que realizan las tareas asignadas por el Driver. Estos ejecutores tienen una responsabilidad clave: Coger la tarea asignada por el driver, ejecutarla, reportar su estado (Exito o Fracaso) y los resultados. Cada aplicación de Spark tiene sus propios procesos de ejecución.</p>
+<p>Cada ejecutor tiene un número de Slots en los que puede paralelizar la tareas.</p>
+<h3 id="jobs"><strong>Jobs</strong></h3>
+<p>Cada acción paralelizada se conoce como un Job. El resultado de cada Job se envía al Driver. Dependiendo del trabajo requerido, puede que se requieran múltiples Jobs.</p>
+<p>Computar un Job es equivalente a trajar sobre una partición de un RDD la acción sobre la que se ha ejecutado. El número de particiones de un Job depende del tipo de Stage (ResultStage o ShuffleMapStage)</p>
+<h3 id="stages"><strong>Stages</strong></h3>
+<p>Un stage es una unidad física de ejecución. Es un paso en el plan de ejecución físico.</p>
+<p>Los Stages son el resultado de dividir un Job.</p>
+<p>Un Stage es un conjunto de Tasks paralelas -&gt; Un task por partición de un RDD que computa el resultado parcial de un Job.</p>
+<h3 id="tasks"><strong>Tasks</strong></h3>
+<p>Un Task es una abstracción de la más pequena unidad de ejecución individual que se puede ejecutar en una sola partición.</p>
+<h3 id="partitions"><strong>Partitions</strong></h3>
+<p>Spark gestiona los datos usando particiones que le ayudan a paralelizar los datos distribuidos con un mínimo tráfico de red.</p>
+<p>Por defecto una parcition en Spark es creada por cada particion en HDFS (64 MB por defecto).</p>
+<p>Por lo general, muchas particiones pequenas ayudan a que el trabajo sea distribuido entre más workers, pero pocas particiones grandes permiten que el trabajo sea realizado en grandes lotes, lo que puede significar un mejor rendimiento.</p>
+<p>Spark solo puede correr una tarea concurrente por cada aparticion. Por lo que si hay 50 cores, solo se podrán ejecutar 50 Tasks a la vez.</p>
+<p>El tamano máximo de una particion está delimitado por el tamano de la memoria del ejecutor.</p>
+<h3 id="shuffling"><strong>Shuffling</strong></h3>
+<p>Shuffling es el proceso de redistribuir datos entre las distintas particiones que puede o no causar el movimiento de datos entre los distintos procesos de la JVM.</p>
+<p>Es el proceso de transferencia de datos entre Stages.</p>
+<p>Hay que evitarlo a toda costa, ya que es una operación muy costosa. Por defecto, el Shuffling no cambia el número de particiones, pero si su contenido.</p>
+<h4 id="más-detalle"><strong>(Más detalle)</strong></h4>
+<p>Para llevar a cabo un Shuffle, Spark necesita:</p>
+<ul>
+<li>Convertir los datos a UnsafeRow - Tungsten Binary Format.</li>
+<li>Escribir los datos a disco en el nodo local - En este punto habría un slot libre para la siguiente tarea.</li>
+<li>Enviar los datos a otros ejecutores.</li>
+<li>El driver decide qué ejecutor recibe qué dato.</li>
+<li>Copiar los datos de nuevo a la RAM en el nuevo ejecutor.</li>
+</ul>
+<h4 id="side-note"><strong>(Side Note)</strong></h4>
+<p>UnsafeRow: es el almacenamiento In Memory que Spark usa para estructuras de datos (DataFrames y DataSets).</p>
+<ul>
+<li>Los valores de las columnas son codificados usando Encoders.</li>
+<li>Misma compacidad que la Serializacion Java, pero más rápido.</li>
+<li>Es posible escribir Encoders personalizados.</li>
+<li>Es más eficiente, ya que spark no tiene que deserializar los datos.</li>
+</ul>
+<h3 id="stages-parte-2"><strong>Stages (Parte 2)</strong></h3>
+<p>Cuando se hace un Shuffle de los datos, se crea una Stage Boundary.</p>
+<p>En un Job tal que asi:</p>
+<pre><code>Read -&gt; Filter -&gt; GroupBy -&gt; Select -&gt; Filter -&gt; Write
+</code></pre>
+<p>Se crearian dos Stages:</p>
+<pre><code>Read -&gt; Filter -&gt; GroupBy -&gt; Shuffle Write
+Shuffle Read -&gt; Group By -&gt; Select -&gt; Filter -&gt; Write
+</code></pre>
+<p>Todas las particiones deben completar el Stage 1 antes de continuar con el 2.</p>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        <div class="post-comments">
+          <div id="disqus_thread"></div>
+<script>
+  window.addEventListener("load", () => {
+    (function() {
+      
+      var d = document,
+        s = d.createElement("script");
+      s.src = "https://danbl.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  });
+</script>
+<noscript
+  >Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript"
+    >comments powered by Disqus.</a
+  ></noscript
+>
+
+        </div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/imdany/" target="_blank">Github</a>
+  </div>
+  
+  <div class="site-footer-item">
+    <a href="http://www.imdany.com/" target="_blank">About</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
+
+
+<script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-85705506-4', 'auto');
+  ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+
+</body>
+
+</html>
